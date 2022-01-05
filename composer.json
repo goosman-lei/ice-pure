@@ -1,0 +1,30 @@
+{
+    "name": "ice/pure",
+    "description": "PHP web application develop framework.",
+    "version": "0.0.1-dev",
+    "type": "library",
+    "minimum-stability": "dev",
+    "require": {
+        "smarty/smarty": "3.1.18",
+    },
+    "autoload": {
+        "psr-4": {
+            "Ice\\Frame\\": "src/Frame",
+            "Ice\\Resource\\": "src/Resource",
+            "Ice\\Filter\\": "src/Filter",
+            "Ice\\DB\\": "src/DB",
+            "Ice\\Util\\": "src/Util",
+            "Ice\\Message\\": "src/Message"
+        },
+        "files": ["class_alias.php", "src/Util/Helper.php"]
+    },
+    "repositories": [
+        {
+            "packagist": false
+        },
+        {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    ]
+}

@@ -1,0 +1,33 @@
+{
+    "name": "${PROJECT_GROUP}/${PROJECT_NAME}",
+    "description": "",
+    "version": "0.0.1-dev",
+    "type": "library",
+    "minimum-stability": "dev",
+    "require": {
+        "ice/pure": ">=0.0.1-dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "${PROJECT_NAMESPACE_ESCAPE}\\Action\\":  "src/action",
+            "${PROJECT_NAMESPACE_ESCAPE}\\Service\\": "src/service",
+            "${PROJECT_NAMESPACE_ESCAPE}\\Daemon\\":  "src/daemon",
+            "${PROJECT_NAMESPACE_ESCAPE}\\UT\\":      "test",
+            "${PROJECT_NAMESPACE_ESCAPE}\\Lib\\":     "src/lib",
+            "${PROJECT_NAMESPACE_ESCAPE}\\Model\\":   "src/model"
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:goosman-lei/ice-pure.git"
+        },
+        {
+            "packagist": false
+        },
+        {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
+    ]
+}

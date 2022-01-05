@@ -1,0 +1,113 @@
+#!/bin/bash
+SCRIPT_DIR=$( cd $( dirname ${BASH_SOURCE[0]} ) && pwd )
+TPL_DIR="$SCRIPT_DIR/../tpl"
+
+################### 环境检测 #########################
+type composer >/dev/null 2>/dev/null
+if [ $? -ne 0 ] ;
+then
+    echo "请先安装composer"
+    exit 1
+fi
+################### 环境检测 #########################
+
+
+source $TPL_DIR/build.conf
+
+PROJECT_ROOT_DIR="$OUTPUT_DIR"
+PROJECT_SRC_DIR="$PROJECT_ROOT_DIR/src"
+
+read -r -d '' FILE_MAPPING <<EOL
+#公用
+$TPL_DIR/composer.json:$PROJECT_ROOT_DIR/composer.json
+$TPL_DIR/tpl/doc.tpl:$PROJECT_ROOT_DIR/tpl/doc.tpl
+$TPL_DIR/tpl/index.php:$PROJECT_ROOT_DIR/tpl/index.php
+$TPL_DIR/bin/ut:$PROJECT_ROOT_DIR/bin/ut
+$TPL_DIR/bin/api-doc-gen:$PROJECT_ROOT_DIR/bin/api-doc-gen
+$TPL_DIR/test/Action/Say/HelloworldTest.php:$PROJECT_ROOT_DIR/test/Action/Say/HelloworldTest.php
+$TPL_DIR/test/Service/Say/HelloTest.php:$PROJECT_ROOT_DIR/test/Service/Say/HelloTest.php
+$TPL_DIR/src/conf/app.php:$PROJECT_SRC_DIR/conf/app.php
+$TPL_DIR/src/conf/resource.php:$PROJECT_SRC_DIR/conf/resource.php
+$TPL_DIR/src/conf/service.php:$PROJECT_SRC_DIR/conf/service.php
+$TPL_DIR/src/conf/message.php:$PROJECT_SRC_DIR/conf/message.php
+$TPL_DIR/src/conf/feature.php:$PROJECT_SRC_DIR/conf/feature.php
+$TPL_DIR/src/filter/ext.php:$PROJECT_SRC_DIR/filter/ext.php
+$TPL_DIR/src/model/User.php:$PROJECT_SRC_DIR/model/User.php
+$TPL_DIR/src/embeded_demo.php:$PROJECT_SRC_DIR/embeded_demo.php
+$TPL_DIR/src/lib/ServiceMessage.php:$PROJECT_SRC_DIR/lib/ServiceMessage.php
+#web
+$TPL_DIR/src/webroot/web.php:$PROJECT_SRC_DIR/webroot/web.php
+$TPL_DIR/src/conf/web.inc:$PROJECT_SRC_DIR/conf/web.inc
+$TPL_DIR/src/smarty-tpl/_common/error.tpl:$PROJECT_SRC_DIR/smarty-tpl/_common/error.tpl
+$TPL_DIR/src/smarty-tpl/say/helloworld.tpl:$PROJECT_SRC_DIR/smarty-tpl/say/helloworld.tpl
+$TPL_DIR/src/action/Say/Helloworld.php:$PROJECT_SRC_DIR/action/Say/Helloworld.php
+#service
+$TPL_DIR/src/webroot/service.php:$PROJECT_SRC_DIR/webroot/service.php
+$TPL_DIR/src/conf/service.inc:$PROJECT_SRC_DIR/conf/service.inc
+$TPL_DIR/src/service/Say.php:$PROJECT_SRC_DIR/service/Say.php
+#daemon
+$TPL_DIR/src/conf/daemon.inc:$PROJECT_SRC_DIR/conf/daemon.inc
+$TPL_DIR/src/daemon/cli.php:$PROJECT_SRC_DIR/daemon/cli.php
+$TPL_DIR/src/daemon/Demo/Command.php:$PROJECT_SRC_DIR/daemon/Demo/Command.php
+$TPL_DIR/src/daemon/Demo/Service.php:$PROJECT_SRC_DIR/daemon/Demo/Service.php
+$TPL_DIR/src/daemon/Demo/Filter.php:$PROJECT_SRC_DIR/daemon/Demo/Filter.php
+$TPL_DIR/src/daemon/Demo/Message.php:$PROJECT_SRC_DIR/daemon/Demo/Message.php
+EOL
+
+
+function ui_make_dir_tree() {
+    mkdir -p "$PROJECT_ROOT_DIR/var"
+    chmod 777 "$PROJECT_ROOT_DIR/var"
+
+    mkdir -p "$PROJECT_ROOT_DIR/bin"
+
+    mkdir -p "$PROJECT_ROOT_DIR/tpl"
+
+    mkdir -p "$PROJECT_ROOT_DIR/test/Action/Say"
+    mkdir -p "$PROJECT_ROOT_DIR/test/Service/Say"
+
+    mkdir -p "$PROJECT_SRC_DIR/webroot"
+    mkdir -p "$PROJECT_SRC_DIR/action"
+    mkdir -p "$PROJECT_SRC_DIR/service"
+    mkdir -p "$PROJECT_SRC_DIR/model"
+    mkdir -p "$PROJECT_SRC_DIR/daemon"
+    mkdir -p "$PROJECT_SRC_DIR/conf"
+    mkdir -p "$PROJECT_SRC_DIR/filter"
+    mkdir -p "$PROJECT_SRC_DIR/lib"
+    mkdir -p "$PROJECT_SRC_DIR/smarty-tpl"
+
+    mkdir -p "$PROJECT_SRC_DIR/smarty-tpl/_common"
+    mkdir -p "$PROJECT_SRC_DIR/smarty-tpl/say"
+    mkdir -p "$PROJECT_SRC_DIR/action/Say"
+    mkdir -p "$PROJECT_SRC_DIR/daemon/Demo"
+}
+
+function ui_cp_files() {
+    echo "$FILE_MAPPING" | awk -F':' 'NF==2&&substr($0,0,1)!="#"{print "cp -rf "$1" "$2;}' | bash
+}
+
+function ui_replace_info() {
+    PENDING_REPLACED_FILES=$(echo "$FILE_MAPPING" | awk -F':' 'NF==2&&substr($0,1,1)!="#"{printf "%s ", $2;}')
+    sed -i.icesedbak "s;\${PROJECT_GROUP};${PROJECT_GROUP};g" $PENDING_REPLACED_FILES
+    sed -i.icesedbak "s;\${PROJECT_NAME};${PROJECT_NAME};g" $PENDING_REPLACED_FILES
+    sed -i.icesedbak "s;\${PROJECT_NAMESPACE};${PROJECT_NAMESPACE};g" $PENDING_REPLACED_FILES
+    sed -i.icesedbak "s;\${PROJECT_NAMESPACE_ESCAPE};${PROJECT_NAMESPACE_ESCAPE};g" $PENDING_REPLACED_FILES
+    sed -i.icesedbak "s;\${PROJECT_ROOT_DIR};${PROJECT_ROOT_DIR};g" $PENDING_REPLACED_FILES
+    find ${OUTPUT_DIR} -name *.icesedbak | xargs rm -rf
+}
+
+function ui_composer_init() {
+    cd $PROJECT_ROOT_DIR
+    composer update -vvv
+    cd -
+}
+
+rm -rf $OUTPUT_DIR
+
+ui_make_dir_tree
+
+ui_cp_files
+
+ui_replace_info
+
+ui_composer_init
