@@ -18,9 +18,6 @@ class_alias('\\Ice\\DB\\BaseModel',             'Ice_DB_Model');
 
 class_alias('\\Ice\\Resource\\Helper\\Redis',   'Helper_Redis');
 
-class_alias('\\Ice\\Message\\Factory',          'MSG_Factory');
-class_alias('\\Ice\\Message\\Abs',              'MSG_Abs');
-
 class_alias('\\Ice\\Util\\Time',                'U_Time');
 class_alias('\\Ice\\Util\\Env',                 'U_Env');
 class_alias('\\Ice\\Util\\Ip',                  'U_Ip');
