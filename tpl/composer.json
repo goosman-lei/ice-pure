@@ -21,13 +21,6 @@
         {
             "type": "vcs",
             "url": "git@github.com:goosman-lei/ice-pure.git"
-        },
-        {
-            "packagist": false
-        },
-        {
-            "type": "composer",
-            "url": "https://packagist.phpcomposer.com"
         }
     ]
 }
