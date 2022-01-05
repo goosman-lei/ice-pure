@@ -7,7 +7,6 @@ class_alias('\\Ice\\Frame\\Logger',             'F_Logger');
 class_alias('\\Ice\\Frame\\Error\\Code',        'F_ECode');
 
 class_alias('\\Ice\\Frame\\Web\\Action',        'FW_Action');
-class_alias('\\Ice\\Frame\\Web\\UnitTest',      'FW_UT');
 
 class_alias('\\Ice\\Frame\\Service\\Service',   'FS_Service');
 
@@ -18,7 +17,6 @@ class_alias('\\Ice\\DB\\ShardQuery',            'Ice_DB_SQuery');
 class_alias('\\Ice\\DB\\BaseModel',             'Ice_DB_Model');
 
 class_alias('\\Ice\\Resource\\Helper\\Redis',   'Helper_Redis');
-class_alias('\\Ice\\Resource\\Helper\\Rabbitmq','Helper_Rabbitmq');
 
 class_alias('\\Ice\\Message\\Factory',          'MSG_Factory');
 class_alias('\\Ice\\Message\\Abs',              'MSG_Abs');
