@@ -27,14 +27,16 @@ $TPL_DIR/bin/api-doc-gen:$PROJECT_ROOT_DIR/bin/api-doc-gen
 $TPL_DIR/test/Action/Say/HelloworldTest.php:$PROJECT_ROOT_DIR/test/Action/Say/HelloworldTest.php
 $TPL_DIR/test/Service/Say/HelloTest.php:$PROJECT_ROOT_DIR/test/Service/Say/HelloTest.php
 $TPL_DIR/src/conf/app.php:$PROJECT_SRC_DIR/conf/app.php
+$TPL_DIR/src/conf/logger.inc:$PROJECT_SRC_DIR/conf/logger.inc
+$TPL_DIR/src/conf/daemon.inc:$PROJECT_SRC_DIR/conf/daemon.inc
+$TPL_DIR/src/conf/web.inc:$PROJECT_SRC_DIR/conf/web.inc
+$TPL_DIR/src/conf/service.inc:$PROJECT_SRC_DIR/conf/service.inc
 $TPL_DIR/src/conf/resource.php:$PROJECT_SRC_DIR/conf/resource.php
 $TPL_DIR/src/conf/service.php:$PROJECT_SRC_DIR/conf/service.php
-$TPL_DIR/src/conf/message.php:$PROJECT_SRC_DIR/conf/message.php
 $TPL_DIR/src/conf/feature.php:$PROJECT_SRC_DIR/conf/feature.php
 $TPL_DIR/src/filter/ext.php:$PROJECT_SRC_DIR/filter/ext.php
 $TPL_DIR/src/model/User.php:$PROJECT_SRC_DIR/model/User.php
 $TPL_DIR/src/embeded_demo.php:$PROJECT_SRC_DIR/embeded_demo.php
-$TPL_DIR/src/lib/ServiceMessage.php:$PROJECT_SRC_DIR/lib/ServiceMessage.php
 #web
 $TPL_DIR/src/webroot/web.php:$PROJECT_SRC_DIR/webroot/web.php
 $TPL_DIR/src/conf/web.inc:$PROJECT_SRC_DIR/conf/web.inc
@@ -51,7 +53,6 @@ $TPL_DIR/src/daemon/cli.php:$PROJECT_SRC_DIR/daemon/cli.php
 $TPL_DIR/src/daemon/Demo/Command.php:$PROJECT_SRC_DIR/daemon/Demo/Command.php
 $TPL_DIR/src/daemon/Demo/Service.php:$PROJECT_SRC_DIR/daemon/Demo/Service.php
 $TPL_DIR/src/daemon/Demo/Filter.php:$PROJECT_SRC_DIR/daemon/Demo/Filter.php
-$TPL_DIR/src/daemon/Demo/Message.php:$PROJECT_SRC_DIR/daemon/Demo/Message.php
 EOL
 
 
